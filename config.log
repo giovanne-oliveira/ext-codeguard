@@ -30,8 +30,8 @@ Kernel configured for up to 8 processors.
 Processor type: arm64e (ARM64E)
 Processors active: 0 1 2 3 4 5 6 7
 Primary memory available: 16.00 gigabytes
-Default processor set: 459 tasks, 3703 threads, 8 processors
-Load average: 3.86, Mach factor: 4.41
+Default processor set: 506 tasks, 3960 threads, 8 processors
+Load average: 5.42, Mach factor: 4.76
 /bin/machine           = unknown
 /usr/bin/oslevel       = unknown
 /bin/universe          = unknown
@@ -378,7 +378,7 @@ configure:7027: checking for -single_module linker flag
 configure:7049: result: yes
 configure:7051: checking for -exported_symbols_list linker flag
 configure:7068: gcc -o conftest -O2 -fvisibility=hidden -Wparentheses -flto -DZEPHIR_RELEASE=1 -I/opt/homebrew/opt/openssl@1.1/include -L/opt/homebrew/opt/openssl@1.1/lib -Wl,-exported_symbols_list,conftest.sym conftest.c  >&5
-ld: warning: cannot export hidden symbol _main from /var/folders/tn/yvtbcvpj2pdg9qw82jx7kdxr0000gp/T/conftest-ea9d61.o
+ld: warning: cannot export hidden symbol _main from /var/folders/tn/yvtbcvpj2pdg9qw82jx7kdxr0000gp/T/conftest-2c3934.o
 configure:7071: $? = 0
 configure:7085: result: yes
 configure:7205: checking if gcc supports -fno-rtti -fno-exceptions
