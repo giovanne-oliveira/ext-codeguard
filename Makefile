@@ -1,14 +1,14 @@
-srcdir = /home/giovanne/codeguard/ext
-builddir = /home/giovanne/codeguard/ext
-top_srcdir = /home/giovanne/codeguard/ext
-top_builddir = /home/giovanne/codeguard/ext
-EGREP = /bin/grep -E
-SED = /bin/sed
+srcdir = /Users/giovanne/Projects/codeguard/ext
+builddir = /Users/giovanne/Projects/codeguard/ext
+top_srcdir = /Users/giovanne/Projects/codeguard/ext
+top_builddir = /Users/giovanne/Projects/codeguard/ext
+EGREP = /usr/bin/grep -E
+SED = /usr/bin/sed
 CONFIGURE_COMMAND = './configure' '--enable-codeguard'
 CONFIGURE_OPTIONS = '--enable-codeguard'
-SHLIB_SUFFIX_NAME = so
+SHLIB_SUFFIX_NAME = dylib
 SHLIB_DL_SUFFIX_NAME = so
-AWK = gawk
+AWK = awk
 shared_objects_codeguard = codeguard.lo kernel/main.lo kernel/memory.lo kernel/exception.lo kernel/debug.lo kernel/backtrace.lo kernel/object.lo kernel/array.lo kernel/string.lo kernel/fcall.lo kernel/require.lo kernel/file.lo kernel/operators.lo kernel/math.lo kernel/concat.lo kernel/variables.lo kernel/filter.lo kernel/iterator.lo kernel/time.lo kernel/exit.lo codeguard/loader.lo
 PHP_PECL_EXTENSION = codeguard
 CODEGUARD_SHARED_LIBADD =
@@ -16,36 +16,37 @@ PHP_MODULES = $(phplibdir)/codeguard.la
 PHP_ZEND_EX =
 all_targets = $(PHP_MODULES) $(PHP_ZEND_EX)
 install_targets = install-modules install-headers
-prefix = /usr
+prefix = /opt/homebrew/Cellar/php/8.2.8
 exec_prefix = $(prefix)
 libdir = ${exec_prefix}/lib
-prefix = /usr
-phplibdir = /home/giovanne/codeguard/ext/modules
-phpincludedir = /usr/include/php/20190902
+prefix = /opt/homebrew/Cellar/php/8.2.8
+phplibdir = /Users/giovanne/Projects/codeguard/ext/modules
+phpincludedir = /opt/homebrew/Cellar/php/8.2.8/include/php
 CC = gcc
-CFLAGS = -O2 -fvisibility=hidden -Wparentheses -DZEPHIR_RELEASE=1
-CFLAGS_CLEAN = $(CFLAGS)
+CFLAGS = -O2 -fvisibility=hidden -Wparentheses -flto -DZEPHIR_RELEASE=1
+CFLAGS_CLEAN = $(CFLAGS) -D_GNU_SOURCE
 CPP = gcc -E
-CPPFLAGS = -DHAVE_CONFIG_H
+CPPFLAGS = -I/opt/homebrew/opt/openssl@1.1/include -DHAVE_CONFIG_H
 CXX =
 CXXFLAGS =
 CXXFLAGS_CLEAN = $(CXXFLAGS)
-EXTENSION_DIR = /usr/lib/php/20190902
-PHP_EXECUTABLE = /usr/bin/php7.4
+EXTENSION_DIR = /opt/homebrew/Cellar/php/8.2.8/pecl/20220829
+PHP_EXECUTABLE = /opt/homebrew/Cellar/php/8.2.8/bin/php
 EXTRA_LDFLAGS =
 EXTRA_LIBS =
-INCLUDES = -I/usr/include/php/20190902 -I/usr/include/php/20190902/main -I/usr/include/php/20190902/TSRM -I/usr/include/php/20190902/Zend -I/usr/include/php/20190902/ext -I/usr/include/php/20190902/ext/date/lib
+INCLUDES = -I/opt/homebrew/Cellar/php/8.2.8/include/php -I/opt/homebrew/Cellar/php/8.2.8/include/php/main -I/opt/homebrew/Cellar/php/8.2.8/include/php/TSRM -I/opt/homebrew/Cellar/php/8.2.8/include/php/Zend -I/opt/homebrew/Cellar/php/8.2.8/include/php/ext -I/opt/homebrew/Cellar/php/8.2.8/include/php/ext/date/lib
 LFLAGS =
-LDFLAGS =
+LDFLAGS = -L/opt/homebrew/opt/openssl@1.1/lib
 SHARED_LIBTOOL =
 LIBTOOL = $(SHELL) $(top_builddir)/libtool
-SHELL = /bin/bash
+SHELL = /bin/sh
 INSTALL_HEADERS = ext/codeguard/php_CODEGUARD.h
+BUILD_CC = gcc
 mkinstalldirs = $(top_srcdir)/build/shtool mkdir -p
 INSTALL = $(top_srcdir)/build/shtool install -c
 INSTALL_DATA = $(INSTALL) -m 644
 
-DEFS = -DPHP_ATOM_INC -I$(top_builddir)/include -I$(top_builddir)/main -I$(top_srcdir)
+DEFS = -I$(top_builddir)/include -I$(top_builddir)/main -I$(top_srcdir)
 COMMON_FLAGS = $(DEFS) $(INCLUDES) $(EXTRA_INCLUDES) $(CPPFLAGS) $(PHP_FRAMEWORKPATH)
 
 all: $(all_targets)
@@ -58,22 +59,22 @@ build-modules: $(PHP_MODULES) $(PHP_ZEND_EX)
 
 build-binaries: $(PHP_BINARIES)
 
-libphp$(PHP_MAJOR_VERSION).la: $(PHP_GLOBAL_OBJS) $(PHP_SAPI_OBJS)
-	$(LIBTOOL) --mode=link $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -rpath $(phptempdir) $(EXTRA_LDFLAGS) $(LDFLAGS) $(PHP_RPATHS) $(PHP_GLOBAL_OBJS) $(PHP_SAPI_OBJS) $(EXTRA_LIBS) $(ZEND_EXTRA_LIBS) -o $@
+libphp.la: $(PHP_GLOBAL_OBJS) $(PHP_SAPI_OBJS)
+	$(LIBTOOL) --mode=link $(CC) $(LIBPHP_CFLAGS) $(CFLAGS) $(EXTRA_CFLAGS) -rpath $(phptempdir) $(EXTRA_LDFLAGS) $(LDFLAGS) $(PHP_RPATHS) $(PHP_GLOBAL_OBJS) $(PHP_SAPI_OBJS) $(EXTRA_LIBS) $(ZEND_EXTRA_LIBS) -o $@
 	-@$(LIBTOOL) --silent --mode=install cp $@ $(phptempdir)/$@ >/dev/null 2>&1
 
-libs/libphp$(PHP_MAJOR_VERSION).bundle: $(PHP_GLOBAL_OBJS) $(PHP_SAPI_OBJS)
-	$(CC) $(MH_BUNDLE_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS) $(LDFLAGS) $(EXTRA_LDFLAGS) $(PHP_GLOBAL_OBJS:.lo=.o) $(PHP_SAPI_OBJS:.lo=.o) $(PHP_FRAMEWORKS) $(EXTRA_LIBS) $(ZEND_EXTRA_LIBS) -o $@ && cp $@ libs/libphp$(PHP_MAJOR_VERSION).so
+libs/libphp.bundle: $(PHP_GLOBAL_OBJS) $(PHP_SAPI_OBJS)
+	$(CC) $(MH_BUNDLE_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS) $(LDFLAGS) $(EXTRA_LDFLAGS) $(PHP_GLOBAL_OBJS:.lo=.o) $(PHP_SAPI_OBJS:.lo=.o) $(PHP_FRAMEWORKS) $(EXTRA_LIBS) $(ZEND_EXTRA_LIBS) -o $@ && cp $@ libs/libphp.so
 
 install: $(all_targets) $(install_targets)
 
 install-sapi: $(OVERALL_TARGET)
 	@echo "Installing PHP SAPI module:       $(PHP_SAPI)"
 	-@$(mkinstalldirs) $(INSTALL_ROOT)$(bindir)
-	-@if test ! -r $(phptempdir)/libphp$(PHP_MAJOR_VERSION).$(SHLIB_DL_SUFFIX_NAME); then \
+	-@if test ! -r $(phptempdir)/libphp.$(SHLIB_DL_SUFFIX_NAME); then \
 		for i in 0.0.0 0.0 0; do \
-			if test -r $(phptempdir)/libphp$(PHP_MAJOR_VERSION).$(SHLIB_DL_SUFFIX_NAME).$$i; then \
-				$(LN_S) $(phptempdir)/libphp$(PHP_MAJOR_VERSION).$(SHLIB_DL_SUFFIX_NAME).$$i $(phptempdir)/libphp$(PHP_MAJOR_VERSION).$(SHLIB_DL_SUFFIX_NAME); \
+			if test -r $(phptempdir)/libphp.$(SHLIB_DL_SUFFIX_NAME).$$i; then \
+				$(LN_S) $(phptempdir)/libphp.$(SHLIB_DL_SUFFIX_NAME).$$i $(phptempdir)/libphp.$(SHLIB_DL_SUFFIX_NAME); \
 				break; \
 			fi; \
 		done; \
@@ -118,7 +119,10 @@ PHP_TEST_SETTINGS = -d 'open_basedir=' -d 'output_buffering=0' -d 'memory_limit=
 PHP_TEST_SHARED_EXTENSIONS =  ` \
 	if test "x$(PHP_MODULES)" != "x"; then \
 		for i in $(PHP_MODULES)""; do \
-			. $$i; $(top_srcdir)/build/shtool echo -n -- " -d extension=$$dlname"; \
+			. $$i; \
+			if test "x$$dlname" != "xdl_test.so"; then \
+				$(top_srcdir)/build/shtool echo -n -- " -d extension=$$dlname"; \
+			fi; \
 		done; \
 	fi; \
 	if test "x$(PHP_ZEND_EX)" != "x"; then \
@@ -154,11 +158,14 @@ test: all
 
 clean:
 	find . -name \*.gcno -o -name \*.gcda | xargs rm -f
-	find . -name \*.lo -o -name \*.o | xargs rm -f
+	find . -name \*.lo -o -name \*.o -o -name \*.dep | xargs rm -f
 	find . -name \*.la -o -name \*.a | xargs rm -f
 	find . -name \*.so | xargs rm -f
 	find . -name .libs -a -type d|xargs rm -rf
-	rm -f libphp$(PHP_MAJOR_VERSION).la $(SAPI_CLI_PATH) $(SAPI_CGI_PATH) $(SAPI_LITESPEED_PATH) $(SAPI_FPM_PATH) $(OVERALL_TARGET) modules/* libs/*
+	rm -f libphp.la $(SAPI_CLI_PATH) $(SAPI_CGI_PATH) $(SAPI_LITESPEED_PATH) $(SAPI_FPM_PATH) $(OVERALL_TARGET) modules/* libs/*
+	rm -f ext/opcache/jit/zend_jit_x86.c
+	rm -f ext/opcache/jit/zend_jit_arm64.c
+	rm -f ext/opcache/minilua
 
 distclean: clean
 	rm -f Makefile config.cache config.log config.status Makefile.objects Makefile.fragments libtool main/php_config.h main/internal_functions_cli.c main/internal_functions.c Zend/zend_dtrace_gen.h Zend/zend_dtrace_gen.h.bak Zend/zend_config.h
@@ -166,7 +173,6 @@ distclean: clean
 	rm -f ext/date/lib/timelib_config.h ext/mbstring/libmbfl/config.h ext/oci8/oci8_dtrace_gen.h ext/oci8/oci8_dtrace_gen.h.bak
 	rm -f scripts/man1/phpize.1 scripts/php-config scripts/man1/php-config.1 sapi/cli/php.1 sapi/cgi/php-cgi.1 sapi/phpdbg/phpdbg.1 ext/phar/phar.1 ext/phar/phar.phar.1
 	rm -f sapi/fpm/php-fpm.conf sapi/fpm/init.d.php-fpm sapi/fpm/php-fpm.service sapi/fpm/php-fpm.8 sapi/fpm/status.html
-	rm -f ext/iconv/php_have_bsd_iconv.h ext/iconv/php_have_glibc_iconv.h ext/iconv/php_have_ibm_iconv.h ext/iconv/php_have_iconv.h ext/iconv/php_have_libiconv.h ext/iconv/php_iconv_aliased_libiconv.h ext/iconv/php_iconv_supports_errno.h ext/iconv/php_php_iconv_h_path.h ext/iconv/php_php_iconv_impl.h
 	rm -f ext/phar/phar.phar ext/phar/phar.php
 	if test "$(srcdir)" != "$(builddir)"; then \
 	  rm -f ext/phar/phar/phar.inc; \
@@ -175,64 +181,96 @@ distclean: clean
 
 prof-gen:
 	CCACHE_DISABLE=1 $(MAKE) PROF_FLAGS=-fprofile-generate all
+	find . -name \*.gcda | xargs rm -f
 
 prof-clean:
 	find . -name \*.lo -o -name \*.o | xargs rm -f
 	find . -name \*.la -o -name \*.a | xargs rm -f
 	find . -name \*.so | xargs rm -f
-	rm -f libphp$(PHP_MAJOR_VERSION).la $(SAPI_CLI_PATH) $(SAPI_CGI_PATH) $(SAPI_LITESPEED_PATH) $(SAPI_FPM_PATH) $(OVERALL_TARGET) modules/* libs/*
+	rm -f libphp.la $(SAPI_CLI_PATH) $(SAPI_CGI_PATH) $(SAPI_LITESPEED_PATH) $(SAPI_FPM_PATH) $(OVERALL_TARGET) modules/* libs/*
 
 prof-use:
 	CCACHE_DISABLE=1 $(MAKE) PROF_FLAGS=-fprofile-use all
 
+%_arginfo.h: %.stub.php
+	@if test -e "$(top_srcdir)/build/gen_stub.php"; then \
+		if test ! -z "$(PHP)"; then \
+			echo Parse $< to generate $@;\
+			$(PHP) $(top_srcdir)/build/gen_stub.php $<; \
+		elif test ! -z "$(PHP_EXECUTABLE)" && test -x "$(PHP_EXECUTABLE)"; then \
+			echo Parse $< to generate $@;\
+			$(PHP_EXECUTABLE) $(top_srcdir)/build/gen_stub.php $<; \
+		fi; \
+	fi;
 
 .PHONY: all clean install distclean test prof-gen prof-clean prof-use
 .NOEXPORT:
-codeguard.lo: /home/giovanne/codeguard/ext/codeguard.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/giovanne/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/giovanne/codeguard/ext/codeguard.c -o codeguard.lo 
-kernel/main.lo: /home/giovanne/codeguard/ext/kernel/main.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/giovanne/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/giovanne/codeguard/ext/kernel/main.c -o kernel/main.lo 
-kernel/memory.lo: /home/giovanne/codeguard/ext/kernel/memory.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/giovanne/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/giovanne/codeguard/ext/kernel/memory.c -o kernel/memory.lo 
-kernel/exception.lo: /home/giovanne/codeguard/ext/kernel/exception.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/giovanne/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/giovanne/codeguard/ext/kernel/exception.c -o kernel/exception.lo 
-kernel/debug.lo: /home/giovanne/codeguard/ext/kernel/debug.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/giovanne/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/giovanne/codeguard/ext/kernel/debug.c -o kernel/debug.lo 
-kernel/backtrace.lo: /home/giovanne/codeguard/ext/kernel/backtrace.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/giovanne/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/giovanne/codeguard/ext/kernel/backtrace.c -o kernel/backtrace.lo 
-kernel/object.lo: /home/giovanne/codeguard/ext/kernel/object.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/giovanne/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/giovanne/codeguard/ext/kernel/object.c -o kernel/object.lo 
-kernel/array.lo: /home/giovanne/codeguard/ext/kernel/array.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/giovanne/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/giovanne/codeguard/ext/kernel/array.c -o kernel/array.lo 
-kernel/string.lo: /home/giovanne/codeguard/ext/kernel/string.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/giovanne/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/giovanne/codeguard/ext/kernel/string.c -o kernel/string.lo 
-kernel/fcall.lo: /home/giovanne/codeguard/ext/kernel/fcall.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/giovanne/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/giovanne/codeguard/ext/kernel/fcall.c -o kernel/fcall.lo 
-kernel/require.lo: /home/giovanne/codeguard/ext/kernel/require.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/giovanne/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/giovanne/codeguard/ext/kernel/require.c -o kernel/require.lo 
-kernel/file.lo: /home/giovanne/codeguard/ext/kernel/file.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/giovanne/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/giovanne/codeguard/ext/kernel/file.c -o kernel/file.lo 
-kernel/operators.lo: /home/giovanne/codeguard/ext/kernel/operators.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/giovanne/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/giovanne/codeguard/ext/kernel/operators.c -o kernel/operators.lo 
-kernel/math.lo: /home/giovanne/codeguard/ext/kernel/math.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/giovanne/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/giovanne/codeguard/ext/kernel/math.c -o kernel/math.lo 
-kernel/concat.lo: /home/giovanne/codeguard/ext/kernel/concat.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/giovanne/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/giovanne/codeguard/ext/kernel/concat.c -o kernel/concat.lo 
-kernel/variables.lo: /home/giovanne/codeguard/ext/kernel/variables.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/giovanne/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/giovanne/codeguard/ext/kernel/variables.c -o kernel/variables.lo 
-kernel/filter.lo: /home/giovanne/codeguard/ext/kernel/filter.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/giovanne/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/giovanne/codeguard/ext/kernel/filter.c -o kernel/filter.lo 
-kernel/iterator.lo: /home/giovanne/codeguard/ext/kernel/iterator.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/giovanne/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/giovanne/codeguard/ext/kernel/iterator.c -o kernel/iterator.lo 
-kernel/time.lo: /home/giovanne/codeguard/ext/kernel/time.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/giovanne/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/giovanne/codeguard/ext/kernel/time.c -o kernel/time.lo 
-kernel/exit.lo: /home/giovanne/codeguard/ext/kernel/exit.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/giovanne/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/giovanne/codeguard/ext/kernel/exit.c -o kernel/exit.lo 
-codeguard/loader.lo: /home/giovanne/codeguard/ext/codeguard/loader.zep.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/giovanne/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/giovanne/codeguard/ext/codeguard/loader.zep.c -o codeguard/loader.lo 
+-include codeguard.dep
+codeguard.lo: /Users/giovanne/Projects/codeguard/ext/codeguard.c
+	$(LIBTOOL) --mode=compile $(CC) -I. -I/Users/giovanne/Projects/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)   -DZEND_COMPILE_DL_EXT=1 -c /Users/giovanne/Projects/codeguard/ext/codeguard.c -o codeguard.lo  -MMD -MF codeguard.dep -MT codeguard.lo
+-include kernel/main.dep
+kernel/main.lo: /Users/giovanne/Projects/codeguard/ext/kernel/main.c
+	$(LIBTOOL) --mode=compile $(CC) -I. -I/Users/giovanne/Projects/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)   -DZEND_COMPILE_DL_EXT=1 -c /Users/giovanne/Projects/codeguard/ext/kernel/main.c -o kernel/main.lo  -MMD -MF kernel/main.dep -MT kernel/main.lo
+-include kernel/memory.dep
+kernel/memory.lo: /Users/giovanne/Projects/codeguard/ext/kernel/memory.c
+	$(LIBTOOL) --mode=compile $(CC) -I. -I/Users/giovanne/Projects/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)   -DZEND_COMPILE_DL_EXT=1 -c /Users/giovanne/Projects/codeguard/ext/kernel/memory.c -o kernel/memory.lo  -MMD -MF kernel/memory.dep -MT kernel/memory.lo
+-include kernel/exception.dep
+kernel/exception.lo: /Users/giovanne/Projects/codeguard/ext/kernel/exception.c
+	$(LIBTOOL) --mode=compile $(CC) -I. -I/Users/giovanne/Projects/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)   -DZEND_COMPILE_DL_EXT=1 -c /Users/giovanne/Projects/codeguard/ext/kernel/exception.c -o kernel/exception.lo  -MMD -MF kernel/exception.dep -MT kernel/exception.lo
+-include kernel/debug.dep
+kernel/debug.lo: /Users/giovanne/Projects/codeguard/ext/kernel/debug.c
+	$(LIBTOOL) --mode=compile $(CC) -I. -I/Users/giovanne/Projects/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)   -DZEND_COMPILE_DL_EXT=1 -c /Users/giovanne/Projects/codeguard/ext/kernel/debug.c -o kernel/debug.lo  -MMD -MF kernel/debug.dep -MT kernel/debug.lo
+-include kernel/backtrace.dep
+kernel/backtrace.lo: /Users/giovanne/Projects/codeguard/ext/kernel/backtrace.c
+	$(LIBTOOL) --mode=compile $(CC) -I. -I/Users/giovanne/Projects/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)   -DZEND_COMPILE_DL_EXT=1 -c /Users/giovanne/Projects/codeguard/ext/kernel/backtrace.c -o kernel/backtrace.lo  -MMD -MF kernel/backtrace.dep -MT kernel/backtrace.lo
+-include kernel/object.dep
+kernel/object.lo: /Users/giovanne/Projects/codeguard/ext/kernel/object.c
+	$(LIBTOOL) --mode=compile $(CC) -I. -I/Users/giovanne/Projects/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)   -DZEND_COMPILE_DL_EXT=1 -c /Users/giovanne/Projects/codeguard/ext/kernel/object.c -o kernel/object.lo  -MMD -MF kernel/object.dep -MT kernel/object.lo
+-include kernel/array.dep
+kernel/array.lo: /Users/giovanne/Projects/codeguard/ext/kernel/array.c
+	$(LIBTOOL) --mode=compile $(CC) -I. -I/Users/giovanne/Projects/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)   -DZEND_COMPILE_DL_EXT=1 -c /Users/giovanne/Projects/codeguard/ext/kernel/array.c -o kernel/array.lo  -MMD -MF kernel/array.dep -MT kernel/array.lo
+-include kernel/string.dep
+kernel/string.lo: /Users/giovanne/Projects/codeguard/ext/kernel/string.c
+	$(LIBTOOL) --mode=compile $(CC) -I. -I/Users/giovanne/Projects/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)   -DZEND_COMPILE_DL_EXT=1 -c /Users/giovanne/Projects/codeguard/ext/kernel/string.c -o kernel/string.lo  -MMD -MF kernel/string.dep -MT kernel/string.lo
+-include kernel/fcall.dep
+kernel/fcall.lo: /Users/giovanne/Projects/codeguard/ext/kernel/fcall.c
+	$(LIBTOOL) --mode=compile $(CC) -I. -I/Users/giovanne/Projects/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)   -DZEND_COMPILE_DL_EXT=1 -c /Users/giovanne/Projects/codeguard/ext/kernel/fcall.c -o kernel/fcall.lo  -MMD -MF kernel/fcall.dep -MT kernel/fcall.lo
+-include kernel/require.dep
+kernel/require.lo: /Users/giovanne/Projects/codeguard/ext/kernel/require.c
+	$(LIBTOOL) --mode=compile $(CC) -I. -I/Users/giovanne/Projects/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)   -DZEND_COMPILE_DL_EXT=1 -c /Users/giovanne/Projects/codeguard/ext/kernel/require.c -o kernel/require.lo  -MMD -MF kernel/require.dep -MT kernel/require.lo
+-include kernel/file.dep
+kernel/file.lo: /Users/giovanne/Projects/codeguard/ext/kernel/file.c
+	$(LIBTOOL) --mode=compile $(CC) -I. -I/Users/giovanne/Projects/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)   -DZEND_COMPILE_DL_EXT=1 -c /Users/giovanne/Projects/codeguard/ext/kernel/file.c -o kernel/file.lo  -MMD -MF kernel/file.dep -MT kernel/file.lo
+-include kernel/operators.dep
+kernel/operators.lo: /Users/giovanne/Projects/codeguard/ext/kernel/operators.c
+	$(LIBTOOL) --mode=compile $(CC) -I. -I/Users/giovanne/Projects/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)   -DZEND_COMPILE_DL_EXT=1 -c /Users/giovanne/Projects/codeguard/ext/kernel/operators.c -o kernel/operators.lo  -MMD -MF kernel/operators.dep -MT kernel/operators.lo
+-include kernel/math.dep
+kernel/math.lo: /Users/giovanne/Projects/codeguard/ext/kernel/math.c
+	$(LIBTOOL) --mode=compile $(CC) -I. -I/Users/giovanne/Projects/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)   -DZEND_COMPILE_DL_EXT=1 -c /Users/giovanne/Projects/codeguard/ext/kernel/math.c -o kernel/math.lo  -MMD -MF kernel/math.dep -MT kernel/math.lo
+-include kernel/concat.dep
+kernel/concat.lo: /Users/giovanne/Projects/codeguard/ext/kernel/concat.c
+	$(LIBTOOL) --mode=compile $(CC) -I. -I/Users/giovanne/Projects/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)   -DZEND_COMPILE_DL_EXT=1 -c /Users/giovanne/Projects/codeguard/ext/kernel/concat.c -o kernel/concat.lo  -MMD -MF kernel/concat.dep -MT kernel/concat.lo
+-include kernel/variables.dep
+kernel/variables.lo: /Users/giovanne/Projects/codeguard/ext/kernel/variables.c
+	$(LIBTOOL) --mode=compile $(CC) -I. -I/Users/giovanne/Projects/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)   -DZEND_COMPILE_DL_EXT=1 -c /Users/giovanne/Projects/codeguard/ext/kernel/variables.c -o kernel/variables.lo  -MMD -MF kernel/variables.dep -MT kernel/variables.lo
+-include kernel/filter.dep
+kernel/filter.lo: /Users/giovanne/Projects/codeguard/ext/kernel/filter.c
+	$(LIBTOOL) --mode=compile $(CC) -I. -I/Users/giovanne/Projects/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)   -DZEND_COMPILE_DL_EXT=1 -c /Users/giovanne/Projects/codeguard/ext/kernel/filter.c -o kernel/filter.lo  -MMD -MF kernel/filter.dep -MT kernel/filter.lo
+-include kernel/iterator.dep
+kernel/iterator.lo: /Users/giovanne/Projects/codeguard/ext/kernel/iterator.c
+	$(LIBTOOL) --mode=compile $(CC) -I. -I/Users/giovanne/Projects/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)   -DZEND_COMPILE_DL_EXT=1 -c /Users/giovanne/Projects/codeguard/ext/kernel/iterator.c -o kernel/iterator.lo  -MMD -MF kernel/iterator.dep -MT kernel/iterator.lo
+-include kernel/time.dep
+kernel/time.lo: /Users/giovanne/Projects/codeguard/ext/kernel/time.c
+	$(LIBTOOL) --mode=compile $(CC) -I. -I/Users/giovanne/Projects/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)   -DZEND_COMPILE_DL_EXT=1 -c /Users/giovanne/Projects/codeguard/ext/kernel/time.c -o kernel/time.lo  -MMD -MF kernel/time.dep -MT kernel/time.lo
+-include kernel/exit.dep
+kernel/exit.lo: /Users/giovanne/Projects/codeguard/ext/kernel/exit.c
+	$(LIBTOOL) --mode=compile $(CC) -I. -I/Users/giovanne/Projects/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)   -DZEND_COMPILE_DL_EXT=1 -c /Users/giovanne/Projects/codeguard/ext/kernel/exit.c -o kernel/exit.lo  -MMD -MF kernel/exit.dep -MT kernel/exit.lo
+-include codeguard/loader.dep
+codeguard/loader.lo: /Users/giovanne/Projects/codeguard/ext/codeguard/loader.zep.c
+	$(LIBTOOL) --mode=compile $(CC) -I. -I/Users/giovanne/Projects/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)   -DZEND_COMPILE_DL_EXT=1 -c /Users/giovanne/Projects/codeguard/ext/codeguard/loader.zep.c -o codeguard/loader.lo  -MMD -MF codeguard/loader.dep -MT codeguard/loader.lo
 $(phplibdir)/codeguard.la: ./codeguard.la
 	$(LIBTOOL) --mode=install cp ./codeguard.la $(phplibdir)
 
 ./codeguard.la: $(shared_objects_codeguard) $(CODEGUARD_SHARED_DEPENDENCIES)
-	$(LIBTOOL) --mode=link $(CC) $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS) $(LDFLAGS)  -o $@ -export-dynamic -avoid-version -prefer-pic -module -rpath $(phplibdir) $(EXTRA_LDFLAGS) $(shared_objects_codeguard) $(CODEGUARD_SHARED_LIBADD)
+	$(LIBTOOL) --mode=link $(CC) -shared $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS) $(LDFLAGS)  -o $@ -export-dynamic -avoid-version -prefer-pic -module -rpath $(phplibdir) $(EXTRA_LDFLAGS) $(shared_objects_codeguard) $(CODEGUARD_SHARED_LIBADD)
 

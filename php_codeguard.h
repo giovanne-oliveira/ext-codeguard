@@ -14,7 +14,7 @@
 #define PHP_CODEGUARD_VERSION     "0.4.2b"
 #define PHP_CODEGUARD_EXTNAME     "codeguard"
 #define PHP_CODEGUARD_AUTHOR      "Giovanne Oliveira"
-#define PHP_CODEGUARD_ZEPVERSION  "0.12.19-$Id$"
+#define PHP_CODEGUARD_ZEPVERSION  "0.17.0-9f99da6"
 #define PHP_CODEGUARD_DESCRIPTION ""
 
 

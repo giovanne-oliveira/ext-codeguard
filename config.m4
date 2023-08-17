@@ -11,6 +11,10 @@ if test "$PHP_CODEGUARD" = "yes"; then
 	AC_DEFINE(HAVE_CODEGUARD, 1, [Whether you have Codeguard])
 	codeguard_sources="codeguard.c kernel/main.c kernel/memory.c kernel/exception.c kernel/debug.c kernel/backtrace.c kernel/object.c kernel/array.c kernel/string.c kernel/fcall.c kernel/require.c kernel/file.c kernel/operators.c kernel/math.c kernel/concat.c kernel/variables.c kernel/filter.c kernel/iterator.c kernel/time.c kernel/exit.c codeguard/loader.zep.c "
 	PHP_NEW_EXTENSION(codeguard, $codeguard_sources, $ext_shared,, )
+	PHP_ADD_BUILD_DIR([$ext_builddir/kernel/])
+	for dir in "codeguard"; do
+		PHP_ADD_BUILD_DIR([$ext_builddir/$dir])
+	done
 	PHP_SUBST(CODEGUARD_SHARED_LIBADD)
 
 	old_CPPFLAGS=$CPPFLAGS

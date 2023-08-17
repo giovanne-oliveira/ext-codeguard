@@ -25,24 +25,19 @@
 #include "kernel/require.h"
 
 
-ZEPHIR_INIT_CLASS(CodeGuard_Loader) {
-
+ZEPHIR_INIT_CLASS(CodeGuard_Loader)
+{
 	ZEPHIR_REGISTER_CLASS(CodeGuard, Loader, codeguard, loader, codeguard_loader_method_entry, 0);
 
 	zend_declare_property_null(codeguard_loader_ce, SL("_validCiphers"), ZEND_ACC_PRIVATE|ZEND_ACC_STATIC);
-
 	zend_declare_property_string(codeguard_loader_ce, SL("version"), "0.4.3b", ZEND_ACC_PRIVATE|ZEND_ACC_STATIC);
-
 	zend_declare_property_string(codeguard_loader_ce, SL("api_endpoint"), "d1t78w3k78qjyrbgd4q70t3gdnwprtb3cnq76s9eensjyxhj", ZEND_ACC_PRIVATE|ZEND_ACC_STATIC);
-
 	zend_declare_property_null(codeguard_loader_ce, SL("apikey"), ZEND_ACC_PRIVATE);
-
 	return SUCCESS;
-
 }
 
-PHP_METHOD(CodeGuard_Loader, crf32_d) {
-
+PHP_METHOD(CodeGuard_Loader, crf32_d)
+{
 	zend_bool _3;
 	zval map;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
@@ -66,17 +61,23 @@ PHP_METHOD(CodeGuard_Loader, crf32_d) {
 	ZVAL_UNDEF(&_9$$4);
 	ZVAL_UNDEF(&_11$$5);
 	ZVAL_UNDEF(&map);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_ZVAL(data)
+	ZEND_PARSE_PARAMETERS_END();
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &data);
-
 	ZEPHIR_SEPARATE_PARAM(data);
 
 
 	ZEPHIR_INIT_VAR(&map);
 	array_init(&map);
 	ZEPHIR_INIT_VAR(&_0);
-	zephir_create_array(&_0, 60, 0);
+	zephir_create_array(&_0, 61, 0);
 	add_assoc_long_ex(&_0, SL("0"), 0);
 	add_assoc_long_ex(&_0, SL("O"), 0);
 	add_assoc_long_ex(&_0, SL("o"), 0);
@@ -173,7 +174,7 @@ PHP_METHOD(CodeGuard_Loader, crf32_d) {
 			zephir_array_fetch(&c, &dataArr, &i, PH_NOISY, "codeguard/Loader.zep", 94);
 			if (!(zephir_array_isset(&map, &c))) {
 				ZEPHIR_INIT_NVAR(&_6$$4);
-				object_init_ex(&_6$$4, zend_exception_get_default(TSRMLS_C));
+				object_init_ex(&_6$$4, zend_ce_exception);
 				ZEPHIR_CALL_FUNCTION(&_7$$4, "bin2hex", &_8, 2, &c);
 				zephir_check_call_status();
 				ZEPHIR_INIT_NVAR(&_9$$4);
@@ -200,11 +201,10 @@ PHP_METHOD(CodeGuard_Loader, crf32_d) {
 		}
 	}
 	RETURN_CCTOR(&res);
-
 }
 
-PHP_METHOD(CodeGuard_Loader, activateEncoder) {
-
+PHP_METHOD(CodeGuard_Loader, activateEncoder)
+{
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
 	zephir_fcall_cache_entry *_0 = NULL;
@@ -221,10 +221,16 @@ PHP_METHOD(CodeGuard_Loader, activateEncoder) {
 	ZVAL_UNDEF(&_4);
 	ZVAL_UNDEF(&json);
 	ZVAL_UNDEF(&_5);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_ZVAL(k)
+	ZEND_PARSE_PARAMETERS_END();
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &k);
-
 
 
 	zephir_read_static_property_ce(&_1, codeguard_loader_ce, SL("api_endpoint"), PH_NOISY_CC | PH_READONLY);
@@ -239,7 +245,7 @@ PHP_METHOD(CodeGuard_Loader, activateEncoder) {
 	ZEPHIR_INIT_VAR(&remote);
 	zephir_file_get_contents(&remote, &_4);
 	if (!zephir_is_true(&remote)) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(zend_exception_get_default(TSRMLS_C), "Can't comunicate with PHPMyLicense Cloud Servers to validate your license.", "codeguard/Loader.zep", 119);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(zend_ce_exception, "Can't comunicate with PHPMyLicense Cloud Servers to validate your license.", "codeguard/Loader.zep", 119);
 		return;
 	}
 	ZEPHIR_INIT_VAR(&json);
@@ -250,11 +256,10 @@ PHP_METHOD(CodeGuard_Loader, activateEncoder) {
 		RETURN_MM_BOOL(1);
 	}
 	ZEPHIR_MM_RESTORE();
-
 }
 
-PHP_METHOD(CodeGuard_Loader, urlSafeB64Encode) {
-
+PHP_METHOD(CodeGuard_Loader, urlSafeB64Encode)
+{
 	zval _1, _3;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
@@ -267,10 +272,16 @@ PHP_METHOD(CodeGuard_Loader, urlSafeB64Encode) {
 	ZVAL_UNDEF(&_2);
 	ZVAL_UNDEF(&_1);
 	ZVAL_UNDEF(&_3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_ZVAL(data)
+	ZEND_PARSE_PARAMETERS_END();
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &data);
-
 
 
 	ZEPHIR_CALL_FUNCTION(&b64, "base64_encode", NULL, 7, data);
@@ -304,11 +315,10 @@ PHP_METHOD(CodeGuard_Loader, urlSafeB64Encode) {
 	zephir_fast_str_replace(&_0, &_1, &_3, &b64);
 	ZEPHIR_CPY_WRT(&b64, &_0);
 	RETURN_CCTOR(&b64);
-
 }
 
-PHP_METHOD(CodeGuard_Loader, urlSafeB64Decode) {
-
+PHP_METHOD(CodeGuard_Loader, urlSafeB64Decode)
+{
 	zval _1, _3;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
@@ -320,10 +330,16 @@ PHP_METHOD(CodeGuard_Loader, urlSafeB64Decode) {
 	ZVAL_UNDEF(&_2);
 	ZVAL_UNDEF(&_1);
 	ZVAL_UNDEF(&_3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_ZVAL(b64)
+	ZEND_PARSE_PARAMETERS_END();
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b64);
-
 	ZEPHIR_SEPARATE_PARAM(b64);
 
 
@@ -349,11 +365,10 @@ PHP_METHOD(CodeGuard_Loader, urlSafeB64Decode) {
 	ZEPHIR_RETURN_CALL_FUNCTION("base64_decode", NULL, 6, b64);
 	zephir_check_call_status();
 	RETURN_MM();
-
 }
 
-PHP_METHOD(CodeGuard_Loader, _testRequirements) {
-
+PHP_METHOD(CodeGuard_Loader, _testRequirements)
+{
 	zval _0, _1;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
@@ -362,6 +377,7 @@ PHP_METHOD(CodeGuard_Loader, _testRequirements) {
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_1);
 
+
 	ZEPHIR_MM_GROW();
 
 	ZEPHIR_INIT_VAR(&_0);
@@ -369,23 +385,22 @@ PHP_METHOD(CodeGuard_Loader, _testRequirements) {
 	ZEPHIR_CALL_FUNCTION(&_1, "extension_loaded", NULL, 8, &_0);
 	zephir_check_call_status();
 	if (!zephir_is_true(&_1)) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(zend_exception_get_default(TSRMLS_C), "OpenSSL extension must be loaded!", "codeguard/Loader.zep", 149);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(zend_ce_exception, "OpenSSL extension must be loaded!", "codeguard/Loader.zep", 149);
 		return;
 	}
 	if (!((zephir_function_exists_ex(ZEND_STRL("openssl_encrypt")) == SUCCESS))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(zend_exception_get_default(TSRMLS_C), "Could not find function openssl_encrypt!", "codeguard/Loader.zep", 150);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(zend_ce_exception, "Could not find function openssl_encrypt!", "codeguard/Loader.zep", 150);
 		return;
 	}
 	if (!((zephir_function_exists_ex(ZEND_STRL("openssl_decrypt")) == SUCCESS))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(zend_exception_get_default(TSRMLS_C), "Could not find function openssl_decrypt!", "codeguard/Loader.zep", 151);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(zend_ce_exception, "Could not find function openssl_decrypt!", "codeguard/Loader.zep", 151);
 		return;
 	}
 	ZEPHIR_MM_RESTORE();
-
 }
 
-PHP_METHOD(CodeGuard_Loader, getKey) {
-
+PHP_METHOD(CodeGuard_Loader, getKey)
+{
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
 	zval *cipher_param = NULL, key, cipherLength, _0, _1, _2;
@@ -398,10 +413,16 @@ PHP_METHOD(CodeGuard_Loader, getKey) {
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_1);
 	ZVAL_UNDEF(&_2);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_STR(cipher)
+	ZEND_PARSE_PARAMETERS_END();
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &cipher_param);
-
 	zephir_get_strval(&cipher, cipher_param);
 
 
@@ -415,11 +436,10 @@ PHP_METHOD(CodeGuard_Loader, getKey) {
 	ZVAL_LONG(&_2, 0);
 	zephir_substr(return_value, &_1, 0 , zephir_get_intval(&cipherLength), 0);
 	RETURN_MM();
-
 }
 
-PHP_METHOD(CodeGuard_Loader, getNewKey) {
-
+PHP_METHOD(CodeGuard_Loader, getNewKey)
+{
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
 	zephir_fcall_cache_entry *_2 = NULL;
@@ -434,10 +454,16 @@ PHP_METHOD(CodeGuard_Loader, getNewKey) {
 	ZVAL_UNDEF(&_1);
 	ZVAL_UNDEF(&kst);
 	ZVAL_UNDEF(&_3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_STR(cipher)
+	ZEND_PARSE_PARAMETERS_END();
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &cipher_param);
-
 	zephir_get_strval(&cipher, cipher_param);
 
 
@@ -525,11 +551,10 @@ PHP_METHOD(CodeGuard_Loader, getNewKey) {
 	ZVAL_LONG(&_3, 0);
 	zephir_substr(return_value, &kst, 0 , zephir_get_intval(&cipherLength), 0);
 	RETURN_MM();
-
 }
 
-PHP_METHOD(CodeGuard_Loader, getIv) {
-
+PHP_METHOD(CodeGuard_Loader, getIv)
+{
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
 	zephir_fcall_cache_entry *_1 = NULL;
@@ -542,10 +567,16 @@ PHP_METHOD(CodeGuard_Loader, getIv) {
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&i);
 	ZVAL_UNDEF(&_2);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_STR(cipher)
+	ZEND_PARSE_PARAMETERS_END();
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &cipher_param);
-
 	zephir_get_strval(&cipher, cipher_param);
 
 
@@ -556,11 +587,10 @@ PHP_METHOD(CodeGuard_Loader, getIv) {
 	ZEPHIR_CALL_SELF(&i, "crf32_d", &_1, 5, &_2);
 	zephir_check_call_status();
 	RETURN_CCTOR(&i);
-
 }
 
-PHP_METHOD(CodeGuard_Loader, decrypt) {
-
+PHP_METHOD(CodeGuard_Loader, decrypt)
+{
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
 	zephir_fcall_cache_entry *_0 = NULL, *_7 = NULL, *_8 = NULL;
@@ -580,10 +610,17 @@ PHP_METHOD(CodeGuard_Loader, decrypt) {
 	ZVAL_UNDEF(&_4$$3);
 	ZVAL_UNDEF(&_5$$3);
 	ZVAL_UNDEF(&_6$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(2, 2)
+		Z_PARAM_STR(cipher)
+		Z_PARAM_STR(code)
+	ZEND_PARSE_PARAMETERS_END();
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 2, 0, &cipher_param, &code_param);
-
 	zephir_get_strval(&cipher, cipher_param);
 	zephir_get_strval(&code, code_param);
 
@@ -596,7 +633,7 @@ PHP_METHOD(CodeGuard_Loader, decrypt) {
 	zephir_read_static_property_ce(&_2, codeguard_loader_ce, SL("_validCiphers"), PH_NOISY_CC | PH_READONLY);
 	if (!(zephir_array_key_exists(&_2, &cipher))) {
 		ZEPHIR_INIT_VAR(&_3$$3);
-		object_init_ex(&_3$$3, zend_exception_get_default(TSRMLS_C));
+		object_init_ex(&_3$$3, zend_ce_exception);
 		ZEPHIR_INIT_VAR(&_4$$3);
 		zephir_read_static_property_ce(&_5$$3, codeguard_loader_ce, SL("_validCiphers"), PH_NOISY_CC | PH_READONLY);
 		zephir_fast_join_str(&_4$$3, SL(", "), &_5$$3);
@@ -618,15 +655,14 @@ PHP_METHOD(CodeGuard_Loader, decrypt) {
 	ZEPHIR_RETURN_CALL_FUNCTION("openssl_decrypt", NULL, 13, &tmp, &cipher, &k, &_9, &iv);
 	zephir_check_call_status();
 	RETURN_MM();
-
 }
 
-PHP_METHOD(CodeGuard_Loader, encryptCode) {
-
+PHP_METHOD(CodeGuard_Loader, encryptCode)
+{
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
 	zephir_fcall_cache_entry *_0 = NULL, *_15 = NULL, *_17 = NULL, *_21 = NULL;
-	zval *code_param = NULL, *cipher_param = NULL, _1, _2, _3, search, _8, cleancode, _9, _10, _11, _12, _13, tmp, _14, _16, _18, datetime, _19, checksum, file, _20, _22, _23, _24, _25, _26, _4$$4, _5$$4, _6$$4, _7$$4;
+	zval *code_param = NULL, *cipher_param = NULL, _1, _2, _3, search, _8, cleancode, _9, _10, _11, _12, _13, tmp, _14, _16, _18, datetime, _19, checksum, file, _20, _22, _23, _24, _25, _26, _27, _28, _4$$4, _5$$4, _6$$4, _7$$4;
 	zval code, cipher;
 	zval *this_ptr = getThis();
 
@@ -657,14 +693,24 @@ PHP_METHOD(CodeGuard_Loader, encryptCode) {
 	ZVAL_UNDEF(&_24);
 	ZVAL_UNDEF(&_25);
 	ZVAL_UNDEF(&_26);
+	ZVAL_UNDEF(&_27);
+	ZVAL_UNDEF(&_28);
 	ZVAL_UNDEF(&_4$$4);
 	ZVAL_UNDEF(&_5$$4);
 	ZVAL_UNDEF(&_6$$4);
 	ZVAL_UNDEF(&_7$$4);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 2)
+		Z_PARAM_STR(code)
+		Z_PARAM_OPTIONAL
+		Z_PARAM_STR(cipher)
+	ZEND_PARSE_PARAMETERS_END();
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 1, &code_param, &cipher_param);
-
 	zephir_get_strval(&code, code_param);
 	if (!cipher_param) {
 		ZEPHIR_INIT_VAR(&cipher);
@@ -678,7 +724,7 @@ PHP_METHOD(CodeGuard_Loader, encryptCode) {
 	zephir_check_call_status();
 	zephir_read_property(&_1, this_ptr, ZEND_STRL("apikey"), PH_NOISY_CC | PH_READONLY);
 	if (zephir_fast_strlen_ev(&_1) < 1) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(zend_exception_get_default(TSRMLS_C), "Unauthorized! You need to call activateEncoder function to enable Code Obfuscation", "codeguard/Loader.zep", 229);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(zend_ce_exception, "Unauthorized! You need to call activateEncoder function to enable Code Obfuscation", "codeguard/Loader.zep", 229);
 		return;
 	}
 	ZEPHIR_INIT_VAR(&_2);
@@ -687,7 +733,7 @@ PHP_METHOD(CodeGuard_Loader, encryptCode) {
 	zephir_read_static_property_ce(&_3, codeguard_loader_ce, SL("_validCiphers"), PH_NOISY_CC | PH_READONLY);
 	if (!(zephir_array_key_exists(&_3, &cipher))) {
 		ZEPHIR_INIT_VAR(&_4$$4);
-		object_init_ex(&_4$$4, zend_exception_get_default(TSRMLS_C));
+		object_init_ex(&_4$$4, zend_ce_exception);
 		ZEPHIR_INIT_VAR(&_5$$4);
 		zephir_read_static_property_ce(&_6$$4, codeguard_loader_ce, SL("_validCiphers"), PH_NOISY_CC | PH_READONLY);
 		zephir_fast_join_str(&_5$$4, SL(", "), &_6$$4);
@@ -754,28 +800,31 @@ PHP_METHOD(CodeGuard_Loader, encryptCode) {
 	ZEPHIR_CONCAT_SVSVS(&_22, "Encoded in ", &datetime, ". Checksum: ", &checksum, " */ \n");
 	zephir_concat_self(&file, &_22);
 	ZEPHIR_INIT_NVAR(&_19);
-	ZVAL_STRING(&_19, "d5k2g8b5f1t6avkkd5qpwqvcdxgp8sb450h66vv4cnkqarbjcgh2jabvchmpaa178dgpw83edxt20sbrcnhqax3541t6gs90cdqp8s9e4184tk25dshpys35e8g6ay3mcnq76tbfdrg6jws0dsqq883cdxgp8sb44wmkpz8\n");
+	ZVAL_STRING(&_19, "d5k2g8b5f1t6avkkd5qpwqvcdxgp8sb450h66vv4cnkqarbjcgh2jabvchmpaa178dgpw83edxt20sbrcnhqax3541t6gs90cdqp8s9e4184tk25dshpys35e8g6ay3mcnq76tbfdrg6jws0dsqq883cdxgp8sb44wmkpz8");
 	ZEPHIR_CALL_SELF(&_23, "crf32_d", &_21, 5, &_19);
 	zephir_check_call_status();
-	zephir_concat_self(&file, &_23);
-	ZEPHIR_INIT_NVAR(&_19);
-	ZVAL_STRING(&_19, "cnv62v18c9gq6s9p6hfp8sb3dxj6aa179933jhakas4pem2k89vp6vapdsc36jkccd3qgt2s69apyjhg89hmpgsme5c46svn9dmn4gaaf5vpejkscdsmjhhscs94av2kb0rkgw2fexqppp1gb9558hancx856gkqcdpncvjr6d56rrt7f1m5jcjndx530gk39d1k8war8dkqajv9a90mmybqcx57jrvk9533jsjjddp4tmjp75k4pn3k6wkjja9v\n");
-	ZEPHIR_CALL_SELF(&_24, "crf32_d", &_21, 5, &_19);
-	zephir_check_call_status();
+	ZEPHIR_INIT_VAR(&_24);
+	ZEPHIR_CONCAT_VS(&_24, &_23, "\n");
 	zephir_concat_self(&file, &_24);
 	ZEPHIR_INIT_NVAR(&_19);
-	ZVAL_STRING(&_19, "8dqp8sa7engq4s2w9hqp2s35e8x3mwkndrm2e");
+	ZVAL_STRING(&_19, "cnv62v18c9gq6s9p6hfp8sb3dxj6aa179933jhakas4pem2k89vp6vapdsc36jkccd3qgt2s69apyjhg89hmpgsme5c46svn9dmn4gaaf5vpejkscdsmjhhscs94av2kb0rkgw2fexqppp1gb9558hancx856gkqcdpncvjr6d56rrt7f1m5jcjndx530gk39d1k8war8dkqajv9a90mmybqcx57jrvk9533jsjjddp4tmjp75k4pn3k6wkjja9v");
 	ZEPHIR_CALL_SELF(&_25, "crf32_d", &_21, 5, &_19);
 	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(&_26);
-	ZEPHIR_CONCAT_VVS(&_26, &_25, &tmp, "');?>");
+	ZEPHIR_CONCAT_VS(&_26, &_25, "\n");
 	zephir_concat_self(&file, &_26);
+	ZEPHIR_INIT_NVAR(&_19);
+	ZVAL_STRING(&_19, "8dqp8sa7engq4s2w9hqp2s35e8x3mwkndrm2e");
+	ZEPHIR_CALL_SELF(&_27, "crf32_d", &_21, 5, &_19);
+	zephir_check_call_status();
+	ZEPHIR_INIT_VAR(&_28);
+	ZEPHIR_CONCAT_VVS(&_28, &_27, &tmp, "');?>");
+	zephir_concat_self(&file, &_28);
 	RETURN_CCTOR(&file);
-
 }
 
-PHP_METHOD(CodeGuard_Loader, run) {
-
+PHP_METHOD(CodeGuard_Loader, run)
+{
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
 	zval *code_param = NULL, *cipher_param = NULL, _0;
@@ -785,10 +834,18 @@ PHP_METHOD(CodeGuard_Loader, run) {
 	ZVAL_UNDEF(&code);
 	ZVAL_UNDEF(&cipher);
 	ZVAL_UNDEF(&_0);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 2)
+		Z_PARAM_STR(code)
+		Z_PARAM_OPTIONAL
+		Z_PARAM_STR(cipher)
+	ZEND_PARSE_PARAMETERS_END();
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 1, &code_param, &cipher_param);
-
 	zephir_get_strval(&code, code_param);
 	if (!cipher_param) {
 		ZEPHIR_INIT_VAR(&cipher);
@@ -800,35 +857,34 @@ PHP_METHOD(CodeGuard_Loader, run) {
 
 	ZEPHIR_CALL_SELF(&_0, "decrypt", NULL, 0, &cipher, &code);
 	zephir_check_call_status();
-	zephir_eval_php(&_0, return_value, "codeguard/Loader.zep:277");
+	zephir_eval_php(&_0, return_value, "codeguard/Loader.zep:274");
 	RETURN_MM();
-
 }
 
-PHP_METHOD(CodeGuard_Loader, getBinaryVersion) {
-
+PHP_METHOD(CodeGuard_Loader, getBinaryVersion)
+{
 	zval _0;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&_0);
 
 
+
 	zephir_read_static_property_ce(&_0, codeguard_loader_ce, SL("version"), PH_NOISY_CC | PH_READONLY);
 	RETURN_CTORW(&_0);
-
 }
 
-PHP_METHOD(CodeGuard_Loader, canEncryptCode) {
-
+PHP_METHOD(CodeGuard_Loader, canEncryptCode)
+{
 	zval *this_ptr = getThis();
 
 
-	RETURN_BOOL(1);
 
+	RETURN_BOOL(1);
 }
 
-PHP_METHOD(CodeGuard_Loader, dispatch) {
-
+PHP_METHOD(CodeGuard_Loader, dispatch)
+{
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
 	zval *code, code_sub, tmp, tmpf, _0, _1;
@@ -839,17 +895,23 @@ PHP_METHOD(CodeGuard_Loader, dispatch) {
 	ZVAL_UNDEF(&tmpf);
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_1);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_ZVAL(code)
+	ZEND_PARSE_PARAMETERS_END();
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &code);
-
 
 
 	ZEPHIR_CALL_FUNCTION(&tmp, "tmpfile", NULL, 16);
 	zephir_check_call_status();
 	ZEPHIR_CALL_FUNCTION(&tmpf, "stream_get_meta_data", NULL, 17, &tmp);
 	zephir_check_call_status();
-	zephir_array_fetch_string(&_0, &tmpf, SL("uri"), PH_NOISY | PH_READONLY, "codeguard/Loader.zep", 296);
+	zephir_array_fetch_string(&_0, &tmpf, SL("uri"), PH_NOISY | PH_READONLY, "codeguard/Loader.zep", 293);
 	ZEPHIR_CPY_WRT(&tmpf, &_0);
 	zephir_fwrite(NULL, &tmp, code);
 	ZEPHIR_INIT_VAR(&_1);
@@ -859,14 +921,14 @@ PHP_METHOD(CodeGuard_Loader, dispatch) {
 	}
 	zephir_fclose(&tmp);
 	ZEPHIR_MM_RESTORE();
-
 }
 
-void zephir_init_static_properties_CodeGuard_Loader(TSRMLS_D) {
-
+void zephir_init_static_properties_CodeGuard_Loader()
+{
 	zval _0;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 		ZVAL_UNDEF(&_0);
+
 
 	ZEPHIR_MM_GROW();
 
@@ -877,6 +939,5 @@ void zephir_init_static_properties_CodeGuard_Loader(TSRMLS_D) {
 	add_assoc_long_ex(&_0, SL("aes-256-cbc"), 32);
 	zephir_update_static_property_ce(codeguard_loader_ce, ZEND_STRL("_validCiphers"), &_0);
 	ZEPHIR_MM_RESTORE();
-
 }
 

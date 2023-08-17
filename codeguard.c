@@ -44,7 +44,7 @@ static PHP_MINIT_FUNCTION(codeguard)
 static PHP_MSHUTDOWN_FUNCTION(codeguard)
 {
 	
-	zephir_deinitialize_memory(TSRMLS_C);
+	zephir_deinitialize_memory();
 	UNREGISTER_INI_ENTRIES();
 	return SUCCESS;
 }
@@ -53,7 +53,7 @@ static PHP_MSHUTDOWN_FUNCTION(codeguard)
 /**
  * Initialize globals on each request or each thread started
  */
-static void php_zephir_init_globals(zend_codeguard_globals *codeguard_globals TSRMLS_DC)
+static void php_zephir_init_globals(zend_codeguard_globals *codeguard_globals)
 {
 	codeguard_globals->initialized = 0;
 
@@ -73,7 +73,7 @@ static void php_zephir_init_globals(zend_codeguard_globals *codeguard_globals TS
 /**
  * Initialize globals only on each thread started
  */
-static void php_zephir_init_module_globals(zend_codeguard_globals *codeguard_globals TSRMLS_DC)
+static void php_zephir_init_module_globals(zend_codeguard_globals *codeguard_globals)
 {
 	
 }
@@ -86,7 +86,7 @@ static PHP_RINIT_FUNCTION(codeguard)
 	php_zephir_init_globals(codeguard_globals_ptr);
 	zephir_initialize_memory(codeguard_globals_ptr);
 
-		zephir_init_static_properties_CodeGuard_Loader(TSRMLS_C);
+		zephir_init_static_properties_CodeGuard_Loader();
 	
 	return SUCCESS;
 }
@@ -94,7 +94,7 @@ static PHP_RINIT_FUNCTION(codeguard)
 static PHP_RSHUTDOWN_FUNCTION(codeguard)
 {
 	
-	zephir_deinitialize_memory(TSRMLS_C);
+	zephir_deinitialize_memory();
 	return SUCCESS;
 }
 
@@ -111,6 +111,7 @@ static PHP_MINFO_FUNCTION(codeguard)
 	php_info_print_table_row(2, "Author", PHP_CODEGUARD_AUTHOR);
 	php_info_print_table_row(2, "Version", PHP_CODEGUARD_VERSION);
 	php_info_print_table_row(2, "Build Date", __DATE__ " " __TIME__ );
+	php_info_print_table_row(2, "Powered by Zephir", "Version " PHP_CODEGUARD_ZEPVERSION);
 	php_info_print_table_end();
 		php_info_print_table_start();
 	php_info_print_table_header(2, "Directive", "Value");

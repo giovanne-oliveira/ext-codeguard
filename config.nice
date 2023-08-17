@@ -2,7 +2,9 @@
 #
 # Created by configure
 
-CFLAGS='-O2 -fvisibility=hidden -Wparentheses -DZEPHIR_RELEASE=1' \
+CFLAGS='-O2 -fvisibility=hidden -Wparentheses -flto -DZEPHIR_RELEASE=1' \
+CPPFLAGS='-I/opt/homebrew/opt/openssl@1.1/include' \
+LDFLAGS='-L/opt/homebrew/opt/openssl@1.1/lib' \
 CC='gcc' \
 './configure' \
 '--enable-codeguard' \
