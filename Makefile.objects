@@ -1,0 +1,48 @@
+codeguard.lo: /home/giovanne/codeguard/ext/codeguard.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/giovanne/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/giovanne/codeguard/ext/codeguard.c -o codeguard.lo 
+kernel/main.lo: /home/giovanne/codeguard/ext/kernel/main.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/giovanne/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/giovanne/codeguard/ext/kernel/main.c -o kernel/main.lo 
+kernel/memory.lo: /home/giovanne/codeguard/ext/kernel/memory.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/giovanne/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/giovanne/codeguard/ext/kernel/memory.c -o kernel/memory.lo 
+kernel/exception.lo: /home/giovanne/codeguard/ext/kernel/exception.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/giovanne/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/giovanne/codeguard/ext/kernel/exception.c -o kernel/exception.lo 
+kernel/debug.lo: /home/giovanne/codeguard/ext/kernel/debug.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/giovanne/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/giovanne/codeguard/ext/kernel/debug.c -o kernel/debug.lo 
+kernel/backtrace.lo: /home/giovanne/codeguard/ext/kernel/backtrace.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/giovanne/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/giovanne/codeguard/ext/kernel/backtrace.c -o kernel/backtrace.lo 
+kernel/object.lo: /home/giovanne/codeguard/ext/kernel/object.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/giovanne/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/giovanne/codeguard/ext/kernel/object.c -o kernel/object.lo 
+kernel/array.lo: /home/giovanne/codeguard/ext/kernel/array.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/giovanne/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/giovanne/codeguard/ext/kernel/array.c -o kernel/array.lo 
+kernel/string.lo: /home/giovanne/codeguard/ext/kernel/string.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/giovanne/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/giovanne/codeguard/ext/kernel/string.c -o kernel/string.lo 
+kernel/fcall.lo: /home/giovanne/codeguard/ext/kernel/fcall.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/giovanne/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/giovanne/codeguard/ext/kernel/fcall.c -o kernel/fcall.lo 
+kernel/require.lo: /home/giovanne/codeguard/ext/kernel/require.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/giovanne/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/giovanne/codeguard/ext/kernel/require.c -o kernel/require.lo 
+kernel/file.lo: /home/giovanne/codeguard/ext/kernel/file.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/giovanne/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/giovanne/codeguard/ext/kernel/file.c -o kernel/file.lo 
+kernel/operators.lo: /home/giovanne/codeguard/ext/kernel/operators.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/giovanne/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/giovanne/codeguard/ext/kernel/operators.c -o kernel/operators.lo 
+kernel/math.lo: /home/giovanne/codeguard/ext/kernel/math.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/giovanne/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/giovanne/codeguard/ext/kernel/math.c -o kernel/math.lo 
+kernel/concat.lo: /home/giovanne/codeguard/ext/kernel/concat.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/giovanne/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/giovanne/codeguard/ext/kernel/concat.c -o kernel/concat.lo 
+kernel/variables.lo: /home/giovanne/codeguard/ext/kernel/variables.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/giovanne/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/giovanne/codeguard/ext/kernel/variables.c -o kernel/variables.lo 
+kernel/filter.lo: /home/giovanne/codeguard/ext/kernel/filter.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/giovanne/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/giovanne/codeguard/ext/kernel/filter.c -o kernel/filter.lo 
+kernel/iterator.lo: /home/giovanne/codeguard/ext/kernel/iterator.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/giovanne/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/giovanne/codeguard/ext/kernel/iterator.c -o kernel/iterator.lo 
+kernel/time.lo: /home/giovanne/codeguard/ext/kernel/time.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/giovanne/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/giovanne/codeguard/ext/kernel/time.c -o kernel/time.lo 
+kernel/exit.lo: /home/giovanne/codeguard/ext/kernel/exit.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/giovanne/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/giovanne/codeguard/ext/kernel/exit.c -o kernel/exit.lo 
+codeguard/loader.lo: /home/giovanne/codeguard/ext/codeguard/loader.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/giovanne/codeguard/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/giovanne/codeguard/ext/codeguard/loader.zep.c -o codeguard/loader.lo 
+$(phplibdir)/codeguard.la: ./codeguard.la
+	$(LIBTOOL) --mode=install cp ./codeguard.la $(phplibdir)
+
+./codeguard.la: $(shared_objects_codeguard) $(CODEGUARD_SHARED_DEPENDENCIES)
+	$(LIBTOOL) --mode=link $(CC) $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS) $(LDFLAGS)  -o $@ -export-dynamic -avoid-version -prefer-pic -module -rpath $(phplibdir) $(EXTRA_LDFLAGS) $(shared_objects_codeguard) $(CODEGUARD_SHARED_LIBADD)
+
